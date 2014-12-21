@@ -5,12 +5,13 @@ public class TouchEvent : MonoBehaviour {
 	// Use this for initialization
 	Vector2 beginPos;
 	bool inUp = false;
+	int id;
 	void Start () {
 	
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () {	
 		if(inUp) {
 			if(Input.GetAxis("Mouse X") < -0.3){
 				//Code for action on mouse moving left
@@ -34,6 +35,7 @@ public class TouchEvent : MonoBehaviour {
 	void OnMouseDown() {
 		beginPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		inUp = true;
+		Debug.Log ("Touch");
 	}
 
 	void OnMouseUp() {
