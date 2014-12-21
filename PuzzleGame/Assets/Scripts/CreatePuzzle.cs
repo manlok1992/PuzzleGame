@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CreatePuzzle : MonoBehaviour {
 	public int num = 8;
-	public Object[,] obj;
+	GameObject[,] objBlock;
 	public int[,] randIndex;
 	public GameObject[] prefab;
 
@@ -15,14 +15,15 @@ public class CreatePuzzle : MonoBehaviour {
 				randIndex[i,j] = UnityEngine.Random.Range(0,4);
 			}
 		}
-		obj = new GameObject[num,num];
+		objBlock = new GameObject[num,num];
 		for(int i = 0; i < num; i++) {
 			for(int j = 0; j < num; j++) {
-				obj[i,j] = GameObject.Instantiate(prefab[randIndex[i,j]], new Vector3(-3+(1*i), -3+(1*j), 0), Quaternion.identity);
+				var obj = GameObject.Instantiate(prefab[randIndex[i,j]], new Vector3(-3+(1*i), -3+(1*j), 0), Quaternion.identity);
+				objBlock[i,j] = (GameObject)obj;
+				TouchEvent temp = (TouchEvent)objBlock[i,j].GetComponent("TouchEvent");
+				temp.row = i;
+				temp.column = j;
 			}
-		}
-		foreach(GameObject o in obj) {
-			o.AddComponent("TouchEvent");
 		}
 	}
 	
