@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class CreatePuzzle : MonoBehaviour {
-	public int num = 8;
-	GameObject[,] objBlock;
+	static public int num = 3;
+	static public GameObject[,] objBlock;
 	public int[,] randIndex;
 	public GameObject[] prefab;
 
