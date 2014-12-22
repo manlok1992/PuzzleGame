@@ -51,9 +51,14 @@ public class TouchEvent : MonoBehaviour {
 		if(dir == Direction.LEFT) {
 			if(row != 0) {
 				TouchEvent tempObj = (TouchEvent)CreatePuzzle.objBlock[row-1, column].GetComponent("TouchEvent");
-				Vector3 tempPos = gameObject.transform.position;
-				gameObject.transform.position = CreatePuzzle.objBlock[row-1, column].transform.position;
-				CreatePuzzle.objBlock[row-1, column].transform.position = tempPos;
+//				Vector3 tempPos = gameObject.transform.position;
+//				gameObject.transform.position = CreatePuzzle.objBlock[row-1, column].transform.position;
+//				CreatePuzzle.objBlock[row-1, column].transform.position = tempPos;
+				if(gameObject.transform.position == CreatePuzzle.objPos[row-1, column]) {
+					gameObject.transform.position = CreatePuzzle.objPos[row, column];
+					Debug.Log ("match");
+				}
+				gameObject.transform.position = CreatePuzzle.objPos[row-1, column];
 				row--;
 				tempObj.row++;
 				isMove = true;

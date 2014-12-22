@@ -17,6 +17,7 @@ public class CreatePuzzle : MonoBehaviour {
 			}
 		}
 		objBlock = new GameObject[num,num];
+		objPos = new Vector3[num,num];
 		for(int i = 0; i < num; i++) {
 			for(int j = 0; j < num; j++) {
 				var obj = GameObject.Instantiate(prefab[randIndex[i,j]], new Vector3(-3+(1*i), -3+(1*j), 0), Quaternion.identity);
