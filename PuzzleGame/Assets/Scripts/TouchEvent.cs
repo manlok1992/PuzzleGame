@@ -12,7 +12,7 @@ public class TouchEvent : MonoBehaviour {
 	void Start () {
 		dir = Direction.NONE;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {	
 		if(isTouchDown) {
@@ -39,6 +39,7 @@ public class TouchEvent : MonoBehaviour {
 			if(Input.GetAxis("Mouse Y") > -0.3 && Input.GetAxis("Mouse Y") < 0.3 
 			   && Input.GetAxis("Mouse X") > -0.3 && Input.GetAxis("Mouse X") < 0.3) {
 				dir = Direction.NONE;
+				print("None");
 			}
 		}
 		if(!isMove && isTouchDown) {
@@ -75,7 +76,7 @@ public class TouchEvent : MonoBehaviour {
 				Vector3 tempPos = gameObject.transform.position;
 				gameObject.transform.position = CreatePuzzle.objBlock[row, column+1].transform.position;
 				CreatePuzzle.objBlock[row, column+1].transform.position = tempPos;
-				column++;
+				column++; 
 				tempObj.column--;
 				isMove = true;
 			}
