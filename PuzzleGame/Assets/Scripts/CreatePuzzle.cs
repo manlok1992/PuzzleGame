@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CreatePuzzle : MonoBehaviour {
 	static public readonly int num = 3;
@@ -14,9 +15,11 @@ public class CreatePuzzle : MonoBehaviour {
 	Vector2 fPos;
 	TouchEvent tempObj2;
 	int arrNum;
+	public List<GameObject>delList;
 
 	// Use this for initialization
 	void Start () {
+		delList = new List<GameObject>();
 		randIndex = new int[num,num];
 		for(int i = 0; i < num; i++) {
 			for(int j = 0; j < num; j++) {
@@ -126,25 +129,65 @@ public class CreatePuzzle : MonoBehaviour {
 							if(dir == Direction.LEFT) {
 								tempEvent.moveR();
 								isMove = false;
+								Match();
 							}
 							if(dir == Direction.RIGHT) {
 								tempEvent.moveL();
 								isMove = false;
+								Match();
 							}
 							if(dir == Direction.UP) {
 								tempEvent.moveD();
 								isMove = false;
+								Match();
 							}
 							if(dir == Direction.DOWN) {
 								tempEvent.moveU();
 								isMove = false;
+								Match();
 							}
 							break;
 						}
+
 					}
 				}
 			}
 		}
+	}
+
+	void Match() {
+		bool des = false;
+
+		for(int n = 0; n < objBlock.Length; n++) {
+			TouchEvent eventF = (TouchEvent)objBlock[n].GetComponent("TouchEvent");
+
+			for(int k = 0; k < objBlock.Length; k++) {
+				TouchEvent eventT = (TouchEvent)objBlock[k].GetComponent("TouchEvent");
+				if((eventT.row == eventF.row-1 && eventT.column == eventF.column && eventT.gameObject.tag == eventF.gameObject.tag) || 
+				   (eventT.row == eventF.row+1 && eventT.column == eventF.column && eventT.gameObject.tag == eventF.gameObject.tag) || 
+				   (eventT.column == eventF.column-1 && eventT.row == eventF.row && eventT.gameObject.tag == eventF.gameObject.tag) || 
+				   (eventT.column == eventF.column+1 && eventT.row == eventF.row && eventT.gameObject.tag == eventF.gameObject.tag)) {
+					delList.Add(eventT.gameObject);
+					des = true;
+				}
+				
+			}
+		}
+
+
+
+		if(des){
+
+			foreach(GameObject go in delList) {
+//				Destroy(go);
+				go.SetActive(false);
+			}
+			delList.Clear();
+
+			tempObj2.gameObject.SetActive(false);
+//			Destroy(tempObj2.gameObject);
+		}
+
 	}
 
 	void OnMouseDown() {
