@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class CreatePuzzle : MonoBehaviour {
-	static public readonly int num = 3;
+	static public readonly int num = 6;
 	static public GameObject[] objBlock;
 	static public Vector3[,] objPos;
 	public int[,] randIndex;
@@ -157,9 +157,13 @@ public class CreatePuzzle : MonoBehaviour {
 
 	void Match() {
 		bool des = false;
+		int des2;
 
 		for(int n = 0; n < objBlock.Length; n++) {
 			TouchEvent eventF = (TouchEvent)objBlock[n].GetComponent("TouchEvent");
+
+			List<GameObject>delList2 = new List<GameObject>();
+			des2 = 0;
 
 			for(int k = 0; k < objBlock.Length; k++) {
 				TouchEvent eventT = (TouchEvent)objBlock[k].GetComponent("TouchEvent");
@@ -167,11 +171,23 @@ public class CreatePuzzle : MonoBehaviour {
 				   (eventT.row == eventF.row+1 && eventT.column == eventF.column && eventT.gameObject.tag == eventF.gameObject.tag) || 
 				   (eventT.column == eventF.column-1 && eventT.row == eventF.row && eventT.gameObject.tag == eventF.gameObject.tag) || 
 				   (eventT.column == eventF.column+1 && eventT.row == eventF.row && eventT.gameObject.tag == eventF.gameObject.tag)) {
-					delList.Add(eventT.gameObject);
-					des = true;
+
+//					delList.Add(eventT.gameObject);
+//					des = true;
+
+					delList2.Add(eventT.gameObject);
+					des2++;
 				}
-				
 			}
+
+			if(des2 >= 2){
+				foreach(GameObject go in delList2) {
+					//				Destroy(go);
+					delList.Add(go);
+				}
+				des = true;
+			}
+			delList2.Clear();
 		}
 
 
@@ -180,14 +196,16 @@ public class CreatePuzzle : MonoBehaviour {
 
 			foreach(GameObject go in delList) {
 //				Destroy(go);
-				go.SetActive(false);
+//				go.SetActive(false);
+				go.GetComponent(SpriteRenderer).enabled = false;
 			}
-			delList.Clear();
 
-			tempObj2.gameObject.SetActive(false);
+
+			//			tempObj2.gameObject.SetActive(false);
+			tempObj2.gameObject.GetComponent(SpriteRenderer).enabled = false;
 //			Destroy(tempObj2.gameObject);
 		}
-
+		delList.Clear();
 	}
 
 	void OnMouseDown() {
