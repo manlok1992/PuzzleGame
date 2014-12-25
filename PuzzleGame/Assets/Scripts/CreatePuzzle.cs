@@ -197,12 +197,12 @@ public class CreatePuzzle : MonoBehaviour {
 			foreach(GameObject go in delList) {
 //				Destroy(go);
 //				go.SetActive(false);
-				go.GetComponent(SpriteRenderer).enabled = false;
+				go.GetComponent<SpriteRenderer>().enabled = false;
 			}
 
 
 			//			tempObj2.gameObject.SetActive(false);
-			tempObj2.gameObject.GetComponent(SpriteRenderer).enabled = false;
+			tempObj2.gameObject.GetComponent<SpriteRenderer>().enabled = false;
 //			Destroy(tempObj2.gameObject);
 		}
 		delList.Clear();
